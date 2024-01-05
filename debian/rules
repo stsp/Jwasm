@@ -1,0 +1,35 @@
+#!/usr/bin/make -f
+
+export DH_VERBOSE = 1
+ifneq "" "$(wildcard jwasm-src/GccUnix.mak)"
+    SRCDIR ?= $(abspath jwasm-src)
+    COPY_DOCS ?= true
+else
+    SRCDIR ?= $(abspath .)
+    COPY_DOCS ?= false
+endif
+DESTDIR ?= $(abspath debian/jwasm)
+PREFIX ?= /usr
+INSTALL = install -c
+
+%:
+	exec dh $@
+
+override_dh_auto_clean:
+	$(MAKE) -C '$(SRCDIR)' -f GccUnix.mak clean
+
+override_dh_auto_configure:
+	# Take this chance to copy out the documentation files...
+	if $(COPY_DOCS); \
+		then cp -a '$(SRCDIR)'/README.md '$(SRCDIR)'/History.txt \
+			   '$(SRCDIR)'/Html .; fi
+
+override_dh_auto_build:
+	$(MAKE) -C '$(SRCDIR)' -f GccUnix.mak
+
+override_dh_auto_test:
+	# Unimplemented.
+
+override_dh_auto_install:
+	$(INSTALL) -d '$(DESTDIR)$(PREFIX)'/bin
+	$(INSTALL) '$(SRCDIR)'/build/GccUnixR/jwasm '$(DESTDIR)$(PREFIX)'/bin

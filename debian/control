@@ -1,0 +1,19 @@
+Source: jwasm
+Section: devel
+Priority: optional
+Maintainer: TK Chia <tkchia@users.noreply.github.com>
+Build-Depends: debhelper (>= 9), quilt, gcc (>= 4.5), libc6-dev (>= 2), bison
+Standards-Version: 3.9.6
+Homepage: https://github.com/Baron-von-Riedesel/JWasm
+
+Package: jwasm
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: x86 assembler with Microsoft masm compatible syntax
+ JWasm is an assembler for the x86 instruction architecture, derived from
+ the Open Watcom Assembler.  JWasm supports the assembly language syntax of
+ the Microsoft Macro Assembler, and can thus be used to process source code
+ written for masm and similar assemblers.
+ .
+ JWasm is released under the Sybase Open Watcom Public License, which is
+ considered an "open source" software license though not a "free" license.
